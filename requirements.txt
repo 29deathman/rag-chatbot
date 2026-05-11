@@ -5,7 +5,7 @@ langchain-core
 langchain-huggingface
 langchain-chroma
 langchain-groq
-chromadb
+faiss-cpu
 sentence-transformers
 pypdf
 langchain-experimental
