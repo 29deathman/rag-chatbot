@@ -11,3 +11,4 @@ pypdf
 torchvision
 langchain-experimental
 protobuf==3.20.3
+langchainhub
