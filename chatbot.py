@@ -5,7 +5,7 @@ from langchain_groq import ChatGroq
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_huggingface.embeddings import HuggingFaceEmbeddings
 from langchain_experimental.text_splitter import SemanticChunker
-from langchain_chroma import Chroma
+from langchain_community.vectorstores import FAISS
 from langchain import hub
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
@@ -58,7 +58,10 @@ def process_pdf(uploaded_file):
     )
     
     docs = semantic_splitter.split_documents(documents)
-    vector_db = Chroma.from_documents(documents=docs, embedding=st.session_state.embeddings)
+    vector_db = FAISS.from_documents(
+    documents=docs,
+    embedding=st.session_state.embeddings
+)
     retriever = vector_db.as_retriever()
     
     prompt = hub.pull("rlm/rag-prompt")
