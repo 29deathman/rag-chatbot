@@ -3,8 +3,8 @@ langchain
 langchain-community
 langchain-core
 langchain-huggingface
+langchain-chroma
 langchain-groq
-faiss-cpu
+chromadb
 sentence-transformers
 pypdf
-torchvision
