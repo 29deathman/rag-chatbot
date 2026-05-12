@@ -6,10 +6,13 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_huggingface.embeddings import HuggingFaceEmbeddings
 from langchain_experimental.text_splitter import SemanticChunker
 from langchain_chroma import Chroma
-import langchainhub as hub
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 import time
+#New prompt instead of langchainhub
+from langchain.prompts import PromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnablePassthrough
 
 # Session state initialization
 if 'rag_chain' not in st.session_state:
@@ -61,7 +64,20 @@ def process_pdf(uploaded_file):
     vector_db = Chroma.from_documents(documents=docs, embedding=st.session_state.embeddings)
     retriever = vector_db.as_retriever()
     
-    prompt = hub.pull("rlm/rag-prompt")
+    #Instead of prompt=hub.pull("rlm/rag-prompt")
+    prompt = PromptTemplate.from_template("""
+    You are a helpful AI assistant.
+    
+    Answer the user's question based ONLY on the context below.
+    
+    Context:
+    {context}
+    
+    Question:
+    {question}
+    
+    Answer:
+    """)
     
     def format_docs(docs):
         return "\n\n".join(doc.page_content for doc in docs)
